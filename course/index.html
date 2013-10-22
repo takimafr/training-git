@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Parlez-vous Git?</title>
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/custom.css" id="theme">
+		<link href='http://fonts.googleapis.com/css?family=Roboto:100' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="css/font-awesome.min.css">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				<section>
+					<h1>Parlez-vous Git ?</h1>
+					<img src="img/git_logo.png" width="300px"/>
+					<p>
+						<small>By <a href="http://excilys.com/" target="_blank">Excilys</a></small>
+					</p>
+					<aside class="notes">
+
+					</aside>
+				</section>
+
+				<section>
+					<section>
+						<h1>Loïc Ortola</h1>
+						<p><i class="icon-twitter"></i> <a href="https://twitter.com/loicortola" target="_blank"> @LoicOrtola</a></p>
+						<p><i class="icon-linkedin"></i> <a href="http://www.linkedin.com/pub/lo%C3%AFc-ortola/31/34b/563" target="_blank"> Loïc Ortola</a></p>
+						<p><a href="mailto:jmartinez@excilys.com" target="_blank">lortola@excilys.com</a>
+					</section>
+					<section>
+						<p>Développeur Java/JEE chez Excilys.</p>
+						<p>Formateur Git/Java/JEE/Android</p>
+					</section>
+				</section>
+
+				<section>
+					<h1>Sommaire</h1>
+					<ol>
+						<li class="fragment">Introduction</li>
+					</ol>
+				</section>	
+				<section>
+					<section>
+						<h1><i class="icon-github"></i> Introduction</h1>
+						<h3>"Git is a stupid content tracker" Scott Chacon, Git Internals</h3>
+					</section>
+
+					<section>
+						<p>Git, ca fonctionne comment?</p>
+						<ol>
+							<li class="fragment" style="font-size:28px;">Stockage des versions sous forme d'arbre plutot que de code différentiel</li>
+							<li class="fragment" style="font-size:28px;">Concept très proche d'un système de fichiers</li>
+							<li class="fragment" style="font-size:28px;">Une unité de changement est un "commit"</li>
+							<li class="fragment" style="font-size:28px;">Les commits se suivent (un commit peut avoir zero, un ou plusieurs parents) et forment une (ou plusieurs) branches</li>
+							<li class="fragment" style="font-size:28px;">Le développeur se place sur une des branches via un pointeur appelé "HEAD"</li>
+						</ol>
+					</section>
+					<section>
+						<p>Pourquoi Git?</p>
+						<ol>
+							<li class="fragment">Développement non linéaire</li>
+							<li class="fragment">Développement distribué</li>
+							<li class="fragment">Performant</li>
+						</ol>
+					</section>
+				</section>
+
+				<!-- Sous le capot -->
+				<section>
+					<section>
+						<h1><i class="icon-th-large"></i> Sous le capot</h1>
+					</section>
+					<section>
+						<h2><i class="icon-th-large"></i> Les Objets Git:</h2>
+						<p>(objets immutables)</p>
+						<ol>
+							<li class="fragment">Blob</li>
+							<li class="fragment">Tree</li>
+							<li class="fragment">Commit</li>
+							<li class="fragment">Tag</li>
+						</ol>						
+					</section>
+					<section>
+						<h2><i class="icon-th-large"></i> Les références Git:</h2>
+						<p>(pointeurs sur un commit, peuvent changer)</p>
+						<ol>
+							<li class="fragment">branch</li>
+							<li class="fragment">HEAD</li>
+							<li class="fragment">remote</li>
+						</ol>						
+					</section>
+					<section>
+						<h2>Modèle de données</h2>
+						<img src="img/git_data_model.png"/>
+					</section>
+					<section>
+						<h2><i class="icon-th-large"></i> Exercice 1</h2>
+					</section>
+				</section>
+				<!-- branche/merge -->
+				<section>
+					<section>
+						<h1><i class="icon-phone"></i> Les branches</h1>
+						<aside class="notes">
+							Comprendre le concept de branche
+							Comprendre la notion de merge
+						</aside>
+					</section>
+					<section>
+						<img src="img/git_branches_1.png">
+					</section>
+					<section>
+						<img src="img/git_branches_2.png">
+					</section>
+					<section>
+						<img src="img/git_branches_3.png">
+					</section>
+					<section>
+						<img src="img/git_branches_4.png">
+					</section>
+					<section>
+						<img src="img/git_branches_5.png">
+					</section>
+					<section>
+						<h2>Permission</h2>
+						<br/>
+						<p>Ajouter la ligne suivante dans votre AndroidManifest :</p>
+						<pre><code data-trim contenteditable>
+&lt;uses-permission android:name="android.permission.CALL_PHONE"/&gt;
+						</code></pre>
+						<p>Permet l'accès aux fonctions de téléphonie.</p>
+					</section>
+					<section>
+						<h1>Passer un appel</h1>
+						<br/>
+						<p>En affichant le pavé numérique</p>
+						<img src="img/intent_dial.png" height="280px">
+						<pre><code data-trim contenteditable>
+// Le numéro à appeler: la syntaxe de l'Uri est tel:LENUMERODETEL
+Uri uri = Uri.parse("tel:+33102030405");		
+		
+// Lancement de l'activité qui va déclencher l'affichage du dialer
+Intent intent = new Intent(Intent.ACTION_DIAL,uri);
+startActivity(intent);
+						</code></pre>
+						<aside class="notes">
+						</aside>
+					</section>
+					<section>
+						<h3>PhoneStateListener</h3>
+						<h3><em><i class="icon-code"></i> Java</em></h3>
+						<pre><code data-trim contenteditable>
+public class MyListener extends PhoneStateListener {
+ 
+    @Override
+    public void onCallStateChanged(int state, String number ) {
+    	switch(state) {
+	    	case TelephonyManager.CALL_STATE_RINGING:
+	            // Le numéro est en train de sonner.
+	    		break;
+	    	case TelephonyManager.CALL_STATE_IDLE:
+	    		// En standby. Rien ne se passe.
+	    		break;
+	    	case TelephonyManager.CALL_STATE_OFFHOOK:
+	    		// Soit un appel est en communication, en train d'être composé, ou mis en attente.
+	    		break;
+    	}
+    }
+}
+						</code></pre>
+					</section>
+					<section>
+						<h3>PhoneStateListener (suite)</h3>
+						<h3><em><i class="icon-code"></i> Java</em></h3>
+						<pre><code data-trim contenteditable>
+//Récupération du TelephonyManager
+TelephonyManager manager = (TelephonyManager)
+                  this.getSystemService(MainActivity.TELEPHONY_SERVICE);
+ 
+//Déclaration du listener
+manager.listen(new MyListener(), PhoneStateListener.LISTEN_CALL_STATE);
+						</code></pre>
+						<br>
+						<pre><code data-trim contenteditable>
+&lt;uses-permission android:name="android.permission.READ_PHONE_STATE"/&gt;
+						</code></pre>
+						<p>Permission pour pouvoir écouter les états du service de téléphonie</p>
+					</section>
+					<section>
+						<h1><i class="icon-android"></i> Exercices</h1>
+					</section>
+				</section>	
+
+				<!-- CHAPITRE TELEPHONIE -->
+
+				<!-- CHAPITRE BITMAPS -->
+
+				<section>
+					<section>
+						<h1><i class="icon-instagram"></i> Bitmap</h1>
+					</section>
+					<section>
+						<h2>Charger un bitmap</h2>
+						<pre style="font-size:16px;"><code data-trim contenteditable>
+BitmapFactory.Options options = new BitmapFactory.Options();
+BitmapFactory.decodeFile("my_file_path", options);
+						</code></pre>
+					</section>
+					<section>
+						<h2>Recycler un bitmap</h2>
+						<p>Depuis Honeycomb: on peut recycler un bitmap.</p>
+						<pre style="font-size:16px;"><code data-trim contenteditable>
+BitmapFactory.Options options = new BitmapFactory.Options();
+options.inBitmap = recycledBitmap;
+// ...
+BitmapFactory.decodeFile("my_file_path", options);
+// ou
+BitmapFactory.decodeFileDescriptor(fileDescriptor, null, options);
+// ...
+						</code></pre>
+						<aside class="notes">
+							Depuis Honeycomb, les bitmaps sont gérés sur la heap Dalvik au même titre que les autres objets de l'application. 
+							De plus, il est possible de recycler/réutiliser un bitmap. Par contre, il faut que le bitmap à charger est exactement les dimensions que celui 
+							que l'on veut recyclé. 
+						</aside>
+					</section>
+					<section>
+						<h2>Libérer un bitmap</h2>
+						<p>Versions inférieures à Honeycomb 3.0 (Api 11)</p>
+						<p>Quand un Bitmap est inutilisé -> Bitmap.recycle()</p>
+						<p><i class="icon-warning-sign"></i> Native heap vs Dalvik's heap.</p>
+						<aside class="notes">
+							Sur les versions inférieures à la 3.0, les bitmaps étaient géré sur une heap différente de celle de Dalvik: Native heap.
+							Ainsi, passez l'objet à null permettait de garbage collecter l'objet sur la heap Dalvik mais pas la Native. L'appel à la méthode
+							Bitmap.recycle() était nécessaire pour libérer réellement la mémoire.
+						</aside>
+					</section>
+				</section>
+
+				<!-- FIN CHAPITRE BITMAPS -->
+
+				<!-- CHAPITRE SYSTEME DE FICHIER -->
+
+				<section>
+					<section>
+						<h1><i class="icon-file"></i> Système de fichiers</h1>
+						<aside class="notes">
+							Comprendre les différents types de stockage (internal/external)
+							Savoir effectuer des opérations de lecture/écriture
+						</aside>
+					</section>
+					<section>
+						<h1>Type de stockage</h1>
+						<br>
+						<br>
+						<div style="text-align:left;">
+							<h2><i class="icon-check-sign"></i> Internal storage</h2>
+							<p>Emplacement dédié à l'application, et privé par défaut. Supprimé à la désinstallation de l'application.</p>
+							<br>
+							<h2><i class="icon-check-sign"></i> External storage</h2>
+							<p>Stockage public et amovible physiquement ou logiquement.</p>
+						</div>
+						<aside class="notes">
+							Internal: Emplacement dédié à l'application, et privé par défaut. Supprimé à la désinstallation de l'application
+
+							External: Stockage public et amovible physiquement ou logiquement (montable/démontable. Peut ne pas être présent! (ex: carte SD enlevée)
+									  Fichiers modifiables par l'utilisateur lors de la connexion à un ordinateur
+						</aside>
+					</section>
+					<section>
+						<h2><i class="icon-file"></i> Internal storage</h2>
+						<h3>Modes d'écriture</h3>
+						<br>
+						<ul>
+							<li>MODE_PRIVATE,</li>
+							<li>MODE_APPEND,</li>
+							<li>MODE_WORLD_READABLE et MODE_WORLD_WRITABLE</li>
+						</ul>
+					</section>
+					<section>
+						<h2><i class="icon-file"></i> External storage</h2>
+						<h3>Récupérer l'External storage</h2>
+							<pre style="font-size:16px;"><code data-trim contenteditable>
+//API 7 et inférieures:
+Environment.getExternalStorageDirectory()
+File sdcardDirectory = Environment.getExternalStorageDirectory();
+File musicDirectory = new File(sdcardDirectory.getAbsolutePath()+ "/Music");
+
+//API 8 et supérieures:
+File musicDirectory = Environment.getExternalStoragePublicDirectory(	                               Environment.DIRECTORY_MUSIC);
+							</code></pre>
+					</section>
+					<section>
+						<h2><i class="icon-file"></i> External storage</h2>
+						<h3>Bonne pratique: Vérifier que le média est disponible</h3>
+							<pre style="font-size:16px;"><code data-trim contenteditable>
+boolean externalStorageAvailable = false;
+boolean externalStorageWriteable = false;
+
+String state = Environment.getExternalStorageState();
+
+if (Environment.MEDIA_MOUNTED.equals(state)) {
+ 	// Le média est monté en lecture/écriture
+	externalStorageAvailable = true;
+	externalStorageWriteable = true;
+} else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+	// Le média est monté en lecture seule
+	externalStorageAvailable = true;
+	externalStorageWriteable = false;
+} else {
+	// Le média n'est pas présent!
+	externalStorageAvailable = externalStorageWriteable = false;
+}
+							</code></pre>
+					</section>
+					<section>
+						<h1><i class="icon-android"></i> Exercices</h1>
+					</section>
+				</section>
+
+				<!-- FIN CHAPITRE SYSTEME DE FICHIER -->
+
+				<!-- CHAPITRE MULTIMEDIA -->
+
+				<section>
+					<section>
+						<h1><i class="icon-music"></i> Multimédia</h1>
+					</section>
+					<section>
+						<h2>Types de STREAM</h2>
+						<br/>
+						<ul>
+							<li>STREAM_TYPE = flux</li>
+							<li>VOICE_CALL, MUSIC, NOTIFICATIONS...</li>
+							<br/>
+							<li>Contrôle du volume: <pre><code data-trim contenteditable>Activity.setVolumeControlStream (int streamType)</pre></code></li>
+						</ul>
+						<aside class="notes">
+							Flux sur lequel une application peut diffuser du son. Différencier les différents type de son: Sonnerie ? Voix ? Musique ? Notifications etc...
+						</aside>
+					</section>
+					<section>
+						<h2>Jouer de la musique</h2>
+						<p>On va utiliser le MediaPlayer.</p>
+						<pre><code data-trim contenteditable>
+try {
+    // on set le fichier audio
+    mediaPlayer.setDataSource(...);
+
+    // on prépare l'audio
+    mediaPlayer.prepare();
+
+    // on commence à jouer l'audio
+    mediaPlayer.start();
+    mediaPlayer.pause();
+    mediaPlayer.stop();
+
+} catch (IOException e) {
+    Log.e(TAG, "Problem during audio loading", e);
+}
+						</code></pre>
+					</section>
+					<section>
+						<img src="http://developer.android.com/images/mediaplayer_state_diagram.gif"/>
+						<br/>
+						<a href="http://developer.android.com/reference/android/media/MediaPlayer.html">Documentation</a>
+					</section>					
+					<section>	
+						<h2><i class="icon-warning-sign"></i> Audio Focus <i class="icon-warning-sign"></i></h2>
+						<p>Être un bon citoyen Android</p>
+						<pre style="font-size:16px;"><code data-trim contenteditable>
+AudioManager am = ...;
+
+// On demande le focus de l'audio
+am.requestAudioFocus(AudioManager.OnAudioFocusChangeListener l, int streamType, ...);
+
+// On restitue le focus de l'audio
+am.abandonAudioFocus(AudioManager.OnAudioFocusChangeListener l);
+						</code></pre>
+						<aside class="notes">
+							Partie important de la gestion du son sous Android. Malheureusement, pas toujours respectée.
+							Permet de prévenir le système, et surtout, les autres applications que notre appli va jouer un son permettant à ces dernières de réagir en fonction.
+						</aside>
+					</section>
+					<section>
+						<h2><i class="icon-code"></i> Code</h2>
+						<pre style="font-size:16px;"><code data-trim contenteditable>
+
+// AudioManager.OnAudioFocusChangeListener
+@Override
+public void onAudioFocusChange(int focusChange) {
+    if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
+        // Récupération du son suite à une perte
+        // on continue de jouer si on revient d'une pause
+        // ou on rejoue le son depuis le début si c'était un stop
+        // ou encore on restitue le niveau de volume
+        // tout dépend du type de AUDIOFOCUS_LOSS
+    } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
+        // perte de l'audio focus pour une longue durée
+        // mettre en stop
+    } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
+        // perte de l'audio focus pour une petite durée
+        // mettre en pause
+    } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
+        // perte de l'audio focus pour une petite durée et 
+        // possibilité de jouer un son en même temps
+        // Baisser le volume
+    }
+}
+						</code></pre>
+					</section>
+					<section>
+						<h1><i class="icon-android"></i> Exercices</h1>
+					</section>
+				</section>
+
+				<!-- FIN CHAPITRE MULTIMEDIA -->
+
+				<!-- CHAPITRE SERVICES -->
+
+				<section>
+					<section>
+						<h1><i class="icon-youtube-play"></i> Services</h1>
+					</section>
+					<section>
+						<h2>Définition</h2>
+						<p>Un service est un composant à utiliser pour les opération longues en tâche de fond et qui ne possède pas d'interface graphique.</p>
+						<br>
+						<p>A déclaré dans le manifest</p>
+						<pre style="font-size:16px;"><code data-trim contenteditable>
+&lt;application ... /&gt;
+      &lt;service android:name=".MusicService" /&gt;
+      ...
+&lt;/application/&gt;
+						</code></pre>
+					</section>
+					<section>
+						<h2> Type de service </h2>
+						<br>
+						<h3>Intent Service</h3>
+						<p>Permet de gérer des requêtes asynchrones une par une et à la demande.</p>
+						<br>
+						<h3>Bound Service</h3>
+						<p>Service qui offre une interface client/serveur.</p>
+						<p>Cycle de vie très lié à celui de l'application.</p>
+					</section>
+					<section>
+						<h2>Cycle de vie</h2>
+						<img src="img/service_lifecycle.png" height="560px">
+					</section>
+					<section>
+						<h2>IntentService</h2>
+						<br>
+						<p>A chaque appel à startService: </p>
+						<pre style="font-size:16px;"><code data-trim contenteditable>
+void onHandleIntent(Intent intent)
+						</code></pre>
+						<br>
+						<p>Utilisation des méthodes putExtra et get*Extra pour passer des informations</p>
+							<pre style="font-size:16px;"><code data-trim contenteditable>
+// Envoyer des données
+Intent intent = new Intent(this, MusicService.class);  
+intent.putExtra("action", Action.PLAY.name());
+
+// Récupérer les données
+intent.getStringExtra("action");
+							</code></pre>
+						</section>	
+						<section>
+							<h1><i class="icon-android"></i> Exercices</h1>
+						</section>
+				</section>
+
+				<!-- FIN CHAPITRE SERVICES -->
+
+				<!-- CHAPITRE ANIMATIONS -->
+
+				<section>
+					<section>
+						<h1><i class="icon-play-circle"></i> Animations</h1>
+					</section>
+					<section>
+						<p>Principe: Effectuer des opérations élémentaires sur les vues/objets<p>
+						<p style="font-size:20px;">ex:Translation/Rotation/Echelle/Transparence</p>
+					</section>	
+					<section>
+						<h2>Animation Utils</h1>
+						<p>Ancien système: API 1</p>
+						<pre style="font-size:16px;"><code data-trim contenteditable>
+&lt;rotate
+	android:fromDegrees="0"
+	android:pivotX="50%"
+	android:pivotY="50%"
+	android:toDegrees="360" /&gt;
+						</code></pre>
+						<pre style="font-size:16px;"><code data-trim contenteditable>
+Button button = (Button) findViewById(R.id.button);
+button.startAnimation(AnimationUtils.loadAnimation(this, R.anim.animation));
+						</code></pre>
+					</section>
+					<section>
+						<h2>View Object Animator</h2>
+						<p>Nouveau système: API 11<p>
+						<pre style="font-size:16px;"><code data-trim contenteditable>
+Button button = (Button) findViewById(R.id.button);
+button.animate().rotation(360);
+						</code></pre>
+					</section>
+					<section>
+						<h1><i class="icon-android"></i> Exercices</h1>
+					</section>
+				</section>			
+
+				<!-- FIN CHAPITRE ANIMATIONS -->
+
+				<section>
+					<h1>THE END</h1>
+					<h3>Merci pour votre attention</h3>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

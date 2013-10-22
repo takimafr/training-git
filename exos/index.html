@@ -1,0 +1,270 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Exercices de la formation Parlez-Vous Android ?">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Parlez-vous Git - Exercices</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+</head>
+<body>
+    <div class="masthead">
+        <div class="container lead">
+            <h1>Parlez-vous Git ?</h1>
+            <p>Approche pratique de Git.</p>
+            <p class="excilys"><span>by</span> <a href="http://www.excilys.com/">Excilys</a></p> 
+        </div>
+    </div>
+    <div class="container">
+        <div class="row-fluid">
+            <section id="exercice1.1">
+                <h1>Exercice 1.1 - Comprendre les Objets git</h1>
+                <p>Le but de cet exercice est de se familiariser avec le concept de Git, à travers l'utilisation de ses commandes bas niveau.</p>
+		<div class="media">
+                    <img class="media-object pull-left" src="img/exo1.1.png" width="400px" />
+                    <div class="media-body">
+                        <p>Indications:</p>
+                        <ul>
+	                    <li>Télécharger l'archive suivante: <strong>Contenu Exercice 1</strong>, l'extraire et initialiser un nouveau repo git à l'intérieur avec la commande <br /><pre>git init</pre></li>
+ 			    <li>Créer les objets <strong>Blob</strong> des trois fichiers textes avec la commande <br /><pre>git hash-object -w nomdufichier.txt</pre></li>
+                            <li>Il faut maintenant ajouter vos fichiers à l'index de Git, en utilisant la commande <br /><pre>git update-index --add nomdufichier.txt</pre></li>
+                            <li>Créer les objets <strong>Tree</strong> pour que git enregistre l'arborescence avec la commande <br /><pre>git write-tree</pre></li>
+                            <li>Commitez votre <strong>Tree</strong> pour enregistrer une sorte de "snapshot" de votre projet <br /><pre>echo 'mon premier commit' | git commit-tree sha_du_tree_a_commiter</pre></li>
+                        </ul>
+                    </div>
+                </div>
+		<div class="media">
+                    <img class="media-object pull-left" src="img/exo1.2.png" width="400px" />
+                    <div class="media-body">
+                        <p>Indications:</p>
+                        <ul>
+
+	                    <li>Modifier <i>fichier3.txt</i> et créer l'objet <strong>Blob</strong> associé, l'ajouter à l'index, et recréer un objet <strong>Tree</strong>.</li>
+ 			    <li>Commiter le nouveau <strong>Tree</strong> en spécifiant le commit parent: <br /><pre>echo 'mon deuxieme commit' | git commit-tree sha_du_tree_a_commiter -p sha_du_commit_parent</pre></li>
+                        </ul>
+                    </div>
+                </div>
+		<div class="media">
+                    <img class="media-object pull-left" src="img/exo1.3.png" width="400px" />
+                    <div class="media-body">
+                        <p>Indications:</p>
+                        <ul>
+
+	                    <li>Modifier <i>fichier1.txt</i> et créer l'objet <strong>Blob</strong> associé, l'ajouter à l'index, et recréer un objet <strong>Tree</strong>.</li>
+ 			    <li>Commiter le nouveau <strong>Tree</strong> en spécifiant le commit parent: <br /><pre>echo 'mon troisieme commit' | git commit-tree sha_du_tree_a_commiter -p sha_du_commit_parent</pre></li>
+ 			    <li>Créez un <strong>annoted Tag</strong> "v1.0" qui pointe sur le troisième commit: <br /><pre>git tag -a nomdutag sha_du_commit_parent -m "message"</pre></li>
+			</ul>
+			<p>Vous avez maintenant réussi à créer un historique git complet! vous pouvez afficher l'historique en utilisant la commande <br/><pre>git log --stat sha_du_dernier_commit</pre></p>
+                    </div>
+                </div>
+            </section>
+	    <section id="exercice1.2">
+                <h1>Exercice 1.2 - Comprendre les Références git</h1>
+                <p>En reprenant l'exercice précédent, nous allons maintenant implémenter les références aux Objets pour mieux en comprendre les principes.</p>
+		<div class="media">
+                    <img class="media-object" src="img/exo1.3.png" />
+                    <div class="media-body">
+                        <p>Indications:</p>
+                        <ul>
+
+	                    <li>Créer une référence qui s'appelle "master" dans heads (<=> branche) vers le dernier commit en utilisant la commande: <br/><pre>git update-ref refs/heads/master sha_du_dernier_commit</pre> </li>
+			    <li>Créer une référence qui s'appelle "old" dans heads (<=> branche) vers le deuxième commit en utilisant la commande: <br/><pre>git update-ref refs/heads/old sha_du_deuxieme_commit</pre> </li>
+ 			    <li>Pour savoir où l'on est placé à l'instant t, git utilise une référence appelée <strong>HEAD</strong>, qui pointe vers une branche. Pour la créer, il suffit d'exécuter:<br/><pre>git symbolic-ref HEAD refs/heads/old</pre></li>
+                            <li>Créer un <strong>lightweight Tag</strong> "v0.0" sur le premier commit. Quelle est la différence avec le <strong>Tag</strong> v1 créé précédemment? <br /><pre>git update-ref refs/tags/nomdutag sha_du_commit</pre> </li>
+			    <li>Initialiser un nouveau repo central <i>parlez-vous-git-remote-exo1.2.git</i> dans votre répertoire personnel (ici: /home/user/git/parlez-vous-git-remote-exo1.2.git), et l'initialiser avec la commande <pre>git init --bare</pre></li>
+			    <li>Dans votre projet: ajouter ce repo en tant que repo distant par défaut (appelé <strong>origin</strong>):<pre> git remote add origin chemindurepo</pre></li>
+			    <li>Pusher votre branche master sur le repo central origin <pre> git push origin master</pre></li>
+			    <li>Pusher vos tags sur le repo central origin <pre> git push --tag origin</pre></li>
+                        </ul>
+                    </div>
+                </div>
+		<div class="media">
+                    <div class="media-body">
+                        <p>A la fin de cet exercice, votre git lola devrait donner:</p>
+<pre>
+* 7741620 (HEAD, tag: v1.0, origin/master, master) mon troisieme commit<br />
+* 631f04d (old) mon deuxieme commit<br />
+* 5e045c9 (tag: v0.0) mon premier commit
+</pre>
+                    </div>
+                </div>
+            </section>
+            <section id="exercice2">
+                <h1>Exercice 2 - Branches/merge</h1>
+                <p>Le but de cette exercice est de comprendre l'intérêt des branches, et de prendre en main un merge (en reprenant l'exercice précédent)</p>
+                <div class="media">
+                    <div class="media-body">
+                        <h3>Etape 1:</h3>
+                        <ul>
+             		    <li>Se positionner sur la branche master, et créer une nouvelle branche <strong>development</strong>:<br /><pre> git checkout -b development</pre></li>
+             		    <li>Modifier le <i>fichier1.txt</i>, créer un fichier <i>fichier4.txt</i> dans <i>dossier1/</i> et supprimer <i>fichier2.txt</i></li>
+             		    <li>Ajouter les modifications et suppressions à l'index:<pre> git add -u .</pre></li>			
+             		    <li>Ajouter les nouveaux fichiers à l'index:<pre> git add .</pre></li>
+             		    <li>Maintenant que tous vos fichiers sont dans l'index, vous pouvez commiter votre index:<br/><pre>git commit -m "mon quatrieme commit sur la branche development"</pre></li>
+			    <li>Pousser votre branche <strong>development sur le repo origin</strong></li>
+			</ul>
+                    </div>
+                </div>
+                <div class="media">
+                    <div class="media-body">
+                        <h3>Etape 2:</h3>
+                        <ul>
+			    <li>Revenir sur la branche <strong>master</strong></li>
+             		    <li>Modifier le <i>fichier3.txt</i>, l'ajouter à l'index</li>
+             		    <li>Commiter les changements avec le message "mon cinquième commit sur la branche master"</li>
+             		    <li>Pousser les changements sur le repo origin</pre></li>
+			</ul>
+                    </div>
+                </div>
+                <div class="media">
+                    <div class="media-body">
+                        <h3>Etape 3:</h3>
+                        <ul>
+			    <li>Merger la branche development sur le master: <pre>git merge development -m "merge de la branche development sur master"</pre></li>
+			    <li>Pusher la branche master sur le repo distant</li>
+             		    <li>Supprimer la branche development locale: <pre>git branch -D development</pre></li>
+             		    <li>Supprimer la branche development distante (!Délicat!): <pre>git push origin :development</pre></li>
+			</ul>
+                    </div>
+                </div>
+                <div class="media">
+                    <div class="media-body">
+                        <h3>Votre repo local doit maintenant ressembler à ceci:</h3>
+<pre>
+*   1dabd32 (HEAD, origin/master, master) merge de development sur master
+|\  
+| * 5c5aeb6 mon quatrieme commit sur la branche development
+* | c6f579e mon cinquième commit sur la branche master
+|/  
+* 7741620 (tag: v1.0) mon troisieme commit
+* 631f04d (old) mon deuxieme commit
+* 5e045c9 (tag: v0.0) mon premier commit
+</pre>
+                    </div>
+                </div>
+
+
+	    </section>
+            <section id="exercice31">
+                <h1>Exercice 3.1 - File System</h1>
+                <p>Le but de cette exercice est de prendre en main le fonctionnement du système de fichiers d'android.</p>
+                <div class="media">
+                    <img class="media-object" src="img/exo3.1.png" />
+                    <div class="media-body">
+                        <p>Indications:</p>
+                        <ul>
+                            <li>Dans un premier temps, montez l'image sdcard.img dans votre Virtual Device (me demander le fichier)</li>
+                            <li>Partie 1: Créer une méthode permettant de lire récursivement le contenu du répertoire Music, et afficher dans la console</li>
+			    <li>Partie 2: Créer une méthode renvoyant une List&lt;String&gt; contenant les chemins absolus des <strong>images</strong> du répertoire Music (et sous répertoires)</li>
+			</ul>
+                    </div>
+                </div>
+	    </section>
+	    <section id="exercice32">
+                <h1>Exercice 3.2 - File System</h1>
+                <p>Il s'agira maintenant d'appliquer vos connaissances sur le projet précédent.</p>
+                <div class="media">
+                    <div class="media-body">
+                    	<p>Vous allez reprendre l'exercice 1 en ajoutant les images de façon dynamique (c'est à dire que vous allez lire les images du répertoire Music de la carte sd de votre appareil, et toutes les ajouter à votre fragment)</p>
+                        <p>Indications:</p>
+			<ul>
+      			    <li>Changer le ViewSwitcher avec un ViewFlipper (qui peut gérer plus de deux images)</li>
+      			    <li>Modifier la méthode créée en Exo3 Partie 2 et renvoyer une List&lt;Bitmap&gt; qui vous servira à instancier les vues</li>
+			    <li>Peupler cette liste à l'aide d'une AsyncTask</li>
+			    <li>Utiliser la méthode <strong>file.getAbsolutePath()</strong> pour instancier vos bitmaps</li>
+			    <li>Utiliser la méthode <strong>setImageBitmap()</strong> pour insérer la bitmap dans la vue imageView</li>
+			</ul>
+			    
+                    </div>
+                </div>
+	    </section>
+ 	    <section id="exercice4">
+                <h1>Exercice 4 - Multimédia</h1>
+                <p>Le but de cette exercice est d'implémenter les fonctionnalités de base du media player d'android (play/pause) dans le projet précédent</p>
+                <div class="media">
+                    <div class="media-body">
+                        <p>Indications:</p>
+                        <ul>
+                            <li>Dans un premier temps, créez un objet AudioPlayer. Ce sera l'objet métier qui pilotera le média player</li>
+                            <li>Lors de la construction de l'audioPlayer, vous lui passerez une instance d'AudioManager (que vous créerez dans votre activité)</li>
+			    <li>Vous passerez la liste de fichiers audio à votre audioPlayer</li>
+			    <li>N'oubliez pas de gérer l'AudioFocus (cf cours) pour ne pas perturber l'utilisation du téléphone</li>
+			    <li>Ajoutez un bouton Play/Pause dans votre NavigationFragment pour gérer le média player</li>
+			</ul>
+                    </div>
+                </div>
+	    </section>
+	    <section id="exercice51">
+                <h1>Exercice 5.1 - Services</h1>
+                <p>Le but de cette exercice est de comprendre le fonctionnement du cycle de vie d'un service</p>
+                <div class="media">
+                    <div class="media-body">
+                        <p>Indications:</p>
+                        <ul>
+                            <li>Créer un Service dans un nouveau projet </li>
+                            <li>Effectuez des opérations dessus et loggez les méthodes onCreate, onStart, onDestroy, onStartCommand, stopSelf, onBind,   </li>
+			</ul>
+                    </div>
+                </div>
+                <section id="exercice52">
+                <h1>Exercice 5.2 - Services</h1>
+                <p>Le but de cette exercice est de mettre en place un service audio qui pourra fonctionner en tâche de fond, indépendemment de votre activité</p>
+                <div class="media">
+                    <div class="media-body">
+                        <p>Indications:</p>
+                        <ul>
+                            <li>Vous allez devoir déplacer votre objet AudioPlayer dans un Service</li>
+                            <li>Pour gérer la communication entre le Service et votre activité, vous déclarerez une énumeration Action dans votre service, et vous passerez une action en argument à chaque clic pour piloter votre service</li>
+			    <li>N'oubliez pas de réflechir au cycle de vie de votre application: Que se passe-t-il quand vous la quittez et que vous revenez dessus, alors que le service est encore en train de fonctionner?</li>
+			</ul>
+                    </div>
+                </div>
+
+	    </section>
+	    <section id="exercice6">
+                <h1>Exercice 6 - Animations</h1>
+                <p>Vous allez dynamiser votre interface en utilisant les animations</p>
+                <div class="media">
+                    <img class="media-object pull-left" src="img/exo6.1.png" width="220px" />
+                    <div class="media-body">
+                        <p>Indications:</p>
+                        <ul>
+                            <li>Créer un animation set dans un fichier xml contenant au moins une translation, une rotation, une alpha, et une scale.</li>
+                            <li>Utiliser des interpolator, des durées différentes, des opérations successives et d'autres simultanées.</li>
+			    <li>Créer une activité avec un bouton centré, et l'animer lors du clic (en utilisant la méthode <strong>view.startAnimation()</strong>)</li>
+			</ul>
+                    </div>
+                </div>
+	    </section>
+	    <section id="projet">
+                <h1>Projet</h1>
+                <p>Voici le cahier des charges du projet proposé:</p>
+		<p>Vous avez commencé à créer un lecteur audio, qui a très peu de fonctionnalités. Le but du projet est de l'avancer et de lui donner davantage de fonctionnalités</p>
+                <div class="media">
+                    <img class="media-object pull-left" src="img/bang-head-here.jpg" width="220px" />
+                    <div class="media-body">
+                        <p>Obligatoire:</p>
+                        <ul>
+                            <li>Créer et implémenter deux boutons "suivant" et "précédent". Lorsque vous cliquerez dessus, il chargera la musique correspondante et affichera la couverture de l'album correspondante.</li>
+                            <li>Dans le fragment ImageViewFragment, ajouter une TextView qui contiendra le nom de la piste (= le nom du fichier sans l'extension)</li>
+			    <li>Ajouter une barre de progression qui affiche où on en est dans la piste courante (vous pouvez utiliser une SeekBar), et qui permet de changer la position courante dans la piste audio</li>
+			</ul>
+                        <p>Aller plus loin:</p>
+                        <ul>
+                            <li>Je secoue mon téléphone -> mélange les chansons (utiliser la méthode shuffle de l'API Collections)</li>
+                            <li>Un compteur de pistes (combien de chansons?)</li>
+			    <li>Afficher une liste d'albums et lire un album en particulier</li>
+			    <li>Ranking: Donnez une note (like dislike) par chanson et les faire remonter dans un classement</li>
+			    <li>Les musiques sont taguées (ont de la métadata: nom de l'album, nom de l'artiste, nom de la chanson...): afficher ces informations de façon ergonomique
+			    <li>Autre: Eclatez vous, faites nous rêver!</li>
+			</ul>
+                    </div>
+                </div>
+	    </section>
+        </div>  
+
+                <script src="js/bootstrap.min.js"></script>
+                <script src="http://code.jquery.com/jquery-latest.js"></script>
+</body>
+</html>
