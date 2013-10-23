@@ -12,8 +12,10 @@ Editer le fichier .gitconfig via la commande:
 
 Pour activer la colorisation syntaxique et les alias "lol" et "lola", ajouter les lignes suivantes au .gitconfig:  
 >  [alias]  
-  lol = log --graph --decorate --pretty=oneline --abbrev-commit  
-  lola = log --graph --decorate --pretty=oneline --abbrev-commit --all  
+  tree = log --graph --decorate --pretty=oneline --abbrev-commit --all  
+  branch-merged = "!f(){ for branch in `git branch -r --merged | grep -v HEAD | grep -v origin/master | grep -v origin/release` ;do git show --format=\"%C(yellow)%d %Cgreen%aN %C(cyan)%ar\" $branch | head -n 1 ; done }; f"
+  branch-not-merged = "!f(){ for branch in `git branch -r --no-merged | grep -v HEAD | grep -v origin/master | grep -v origin/release` ;do git show --format=\"%C(yellow)%d %Cgreen%aN %C(cyan)%ar\" $branch | head -n 1 ; done }; f"
+
   [color]  
   branch = auto  
   diff = auto  
