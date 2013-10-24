@@ -28,7 +28,6 @@
 		<script src="lib/js/html5shiv.js"></script>
 		<![endif]-->
 	</head>
-
 	<body>
 
 		<div class="reveal">
@@ -63,35 +62,127 @@
 				<section>
 					<h1>Sommaire</h1>
 					<ol>
-						<li class="fragment">Introduction</li>
+						<li>Introduction</li>
+						<li>Installation</li>
+						<li>Basics</li>
+						<li>Sous le capot</li>
+						<li>Préparer un commit</li>
+						<li>Les branches niv 1</li>
+						<li>Repository distant: remote</li>
+						<li>Les branches niv 2</li>
+						<li>Workflows git/Bonnes pratiques</li>
 					</ol>
 				</section>	
+				<!-- Introduction -->
 				<section>
 					<section>
 						<h1><i class="icon-github"></i> Introduction</h1>
 						<h3>"Git is a stupid content tracker" Scott Chacon, Git Internals</h3>
 					</section>
-
 					<section>
-						<p>Git, ca fonctionne comment?</p>
-						<ol>
-							<li class="fragment" style="font-size:28px;">Stockage des versions sous forme d'arbre plutot que de code différentiel</li>
-							<li class="fragment" style="font-size:28px;">Concept très proche d'un système de fichiers</li>
-							<li class="fragment" style="font-size:28px;">Une unité de changement est un "commit"</li>
-							<li class="fragment" style="font-size:28px;">Les commits se suivent (un commit peut avoir zero, un ou plusieurs parents) et forment une (ou plusieurs) branches</li>
-							<li class="fragment" style="font-size:28px;">Le développeur se place sur une des branches via un pointeur appelé "HEAD"</li>
-						</ol>
+						<p>Git, c'est quoi?</p>
 					</section>
 					<section>
 						<p>Pourquoi Git?</p>
 						<ol>
 							<li class="fragment">Développement non linéaire</li>
 							<li class="fragment">Développement distribué</li>
-							<li class="fragment">Performant</li>
+							<li class="fragment">Léger, Performant</li>
 						</ol>
 					</section>
+					<section>
+						<p>Ils utilisent Git:</p>
+						<img src="img/git_logo.png" height="200px"/>
+						<img src="img/linux-logo.png" height="200px"/>
+						<img src="img/netflix-logo.png" height="200px"/>
+						<img src="img/android-logo.png" height="200px"/>
+						<img src="img/phpmyadmin-logo.png" height="200px"/>
+						<img src="img/vlc-logo.png" height="200px"/>
+						<img src="img/jquery-logo.png" height="200px"/>
+					</section>
 				</section>
+			        <!-- Installation -->
+				<section>
+					<section>
+						<h1><i class="icon-github"></i> Installation</h1>
+					</section>
+					<section>
+						<h3>Windows</h3>
+						<a href="http://code.google.com/p/msysgit/downloads/" target="BLANK">http://code.google.com/p/msysgit/downloads/</a>
+						<h3>Linux</h3>
+						<a href="http://git-scm.com/download" target="BLANK">http://git-scm.com/download</a>
+						<br/>Debian ou Ubuntu: apt-get install git
+						<br/>Fedora ou Redhat: yum install git-core
+						<h3>Mac</h3>
+						<a href="http://code.google.com/p/git-osx-installer" target="BLANK">http://code.google.com/p/git-osx-installer</a>
+					</section>
+				</section>
+				<!-- Basics -->
+				<section>
+					<section>
+						<h1><i class="icon-github"></i> Basics</h1>
+					</section>
+					<section>
+						<h3>git config --global -e</h3>
+						<pre>
+[user]
+        name = Loïc Ortola
+        email = lortola@excilys.com
+[alias]
+       lol = log --graph --decorate --pretty=oneline --abbrev-commit
+       tree = log --graph --decorate --pretty=oneline --abbrev-commit --all
+       branch-merged = "!f(){ for branch in `git branch -r --merged | 
+grep -v HEAD | grep -v origin/master | grep -v origin/release` ;
+do git show --format=\"%C(yellow)%d %Cgreen%aN %C(cyan)%ar\" $branch | 
+head -n 1 ; done }; f"
+       branch-not-merged = "!f(){ for branch in `git branch -r --no-merged | 
+grep -v HEAD | grep -v origin/master | grep -v origin/release` ;
+do git show --format=\"%C(yellow)%d %Cgreen%aN %C(cyan)%ar\" $branch | 
+head -n 1 ; done }; f"
 
+[color]
+       branch = auto
+       diff = auto
+       interactive = auto
+       status = auto
+</pre>
+					</section>
+					<section>
+						<h2><i class="icon-th-large"></i> Anatomie d'un projet git:</h2>
+<pre>
+myproject/
+	 |_ .git/
+	 |_ .gitignore
+	 |_ README.md
+</pre>
+					</section>
+					<section>
+						<p>Git, ca fonctionne comment?</p>
+						<img src="img/git_commit_staging.png"/>
+						<ol>
+							<li class="fragment" style="font-size:28px;">Un dossier de travail avec la version actuelle</li>
+							<li class="fragment" style="font-size:28px;">Espace de Stage</li>
+							<li class="fragment" style="font-size:28px;">Unité de changement = commit, versioning = hash</li>
+							<li class="fragment" style="font-size:28px;">Les commits se suivent (0,1, ou plusieurs parents) et forment des branches</li>
+							<li class="fragment" style="font-size:28px;">Ensemble du projet en local</li>
+						</ol>
+					</section>
+					<section>
+						<h2><i class="icon-th-large"></i> Initialisation d'un repo:</h2>
+						Local:						
+						<pre>git init</pre>
+						Central:						
+						<pre>git init --bare</pre>
+						A partir d'un repo existant:						
+						<pre>git clone source</pre>
+						<p style="font-size:26px;">source peut être (entre autres): </p>
+						<ul>
+						<li style="font-size:26px;">un URI (https://github.com/excilys/monprojet.git)</li>
+						<li style="font-size:26px;">un dossier distant via ssh (git@monserver:~/monprojet.git)</li>
+						<li style="font-size:26px;">un dossier monté en local (/home/git/monprojet.git)</li>
+						</ul>
+					</section>
+				</section>
 				<!-- Sous le capot -->
 				<section>
 					<section>
@@ -105,7 +196,7 @@
 							<li class="fragment">Tree</li>
 							<li class="fragment">Commit</li>
 							<li class="fragment">Tag</li>
-						</ol>						
+						</ol>
 					</section>
 					<section>
 						<h2><i class="icon-th-large"></i> Les références Git:</h2>
@@ -124,32 +215,248 @@
 						<h2><i class="icon-th-large"></i> Exercice 1</h2>
 					</section>
 				</section>
-				<!-- branche/merge -->
+				<!-- Préparer un commit -->
 				<section>
 					<section>
-						<h1><i class="icon-phone"></i> Les branches</h1>
+						<h1 style="font-size:50px;"><i class="icon-th-large"></i> Préparer un commit</h1>
+						<img src="img/git_commit_staging.png"/>
+					</section>
+					<section>
+						<h3>Index/Stage:</h3>
+						Ajouter à la staging area
+						<pre>git add --all</pre>
+						Enlever de la staging area
+						<pre>git rm fichier1.txt dossier1/fichier2.txt</pre>
+						<pre>git reset HEAD .</pre>
+						Afficher l'état de la staging area
+						<pre>git status</pre>
+						Annuler les changements d'un fichier par rapport à la HEAD (Attention! cette opération est irréversible!)
+						<pre>git checkout nomdufichier</pre>
+					</section>
+					<section>
+						<h3>.gitignore:</h3>
+						<pre>
+.idea/
+*.svn
+.DS_Store
+.project
+.settings
+.classpath
+*.factorypath
+Thumbs.db
+bin
+target
+*~
+</pre>
+						
+					</section>
+					<section>
+						<h2><i class="icon-th-large"></i> Commit:</h2>
+						<pre>git commit -m "message de commit"</pre>
+					</section>
+					<section>
+						<h2><i class="icon-th-large"></i> Exercice 1</h2>
+					</section>
+				</section>
+				<!-- branche/merge/rebase -->
+				<section>
+					<section>
+						<h1 style="font-size:56px;"><i class="icon-phone"></i> Les branches (lvl 1)</h1>
 						<aside class="notes">
 							Comprendre le concept de branche
 							Comprendre la notion de merge
+							Comprendre la notion de rebase
 						</aside>
 					</section>
 					<section>
+						<h2>Commandes:</h2>
+						Changer de branche:
+						<pre>git checkout nomdelabranche</pre>
+						Créer une branche
+						<pre>git branch nomdelabranche</pre>
+						Merger la branche mabranche sur la branche actuelle
+						<pre>git merge mabranche</pre>
+						Tagger un commit (pour une release)
+						<pre>git tag -a sha_du_commit -m "ma release vX.X.X"</pre>
+					</section>
+					<section>
+						<h2>Git merge</h2>
+					</section>
+					<section>
+						<h2>Git merge</h2>
 						<img src="img/git_branches_1.png">
 					</section>
 					<section>
+						<h2>Git merge</h2>
+						<p>Nouvelle branche:</p>
 						<img src="img/git_branches_2.png">
 					</section>
 					<section>
+						<h2>Git merge</h2>
+						<p>On peut revenir sur une autre branche à tout moment:</p>
 						<img src="img/git_branches_3.png">
 					</section>
 					<section>
+						<h2>Git merge</h2>
+						<p>Les deux branches peuvent évoluer séparément:</p>
 						<img src="img/git_branches_4.png">
 					</section>
 					<section>
+						<h2>Git merge</h2>
+						<p>Merge:</p>
 						<img src="img/git_branches_5.png">
 					</section>
+					<section>
+						<h2>Résolution de conflits</h2>
+						<ul>
+						<li>Avec votre IDE</li>
+						<li>Avec un merge tool: Meld (Mac/Linux), Kdiff3 (Linux), Diffmerge(Windows/Mac/Linux)</li>
+						<li>Changer votre merge tool par défaut dans git:</li>
+						<pre>git mergetool -t votremergetool</pre>
+						</ul>
+					</section>
+
 				</section>
-					
+				<!-- branche/rebase -->
+				<section>
+					<section>
+						<h1 style="font-size:56px;"><i class="icon-phone"></i> Les branches (lvl 2)</h1>
+						<aside class="notes">
+							Comprendre la notion de rebase
+						</aside>
+					</section>
+					<section>
+						<h2>Git rebase</h2>
+						<img src="img/git_branches_6.png">
+					</section>
+					<section>
+						<h2>Git rebase</h2>
+						<img src="img/git_branches_7.png">
+					</section>
+					<section>
+						<h2>Git rebase</h2>
+<pre>
+git@parlez-vous:$ git tree
+* 02bb51e (HEAD, master) commit 5
+| * 05cecc3 (origin/master) commit 4
+|/  
+* 9b89dff commit 3
+* 3aca473 commit 2
+* 11905f6 commit 1
+
+git@parlez-vous:$ git push origin master
+To /git/origin
+ ! [rejected]        master -> master (non-fast-forward)
+error: failed to push some refs to '/git/origin'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Merge the remote changes (e.g. 'git pull')
+hint: before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+</pre>
+					</section>
+					<section>
+						<h2>Git rebase</h2>
+<pre>
+git@parlez-vous:$ git rebase origin/master
+First, rewinding head to replay your work on top of it...
+Applying: commit 5
+
+git@parlez-vous:$ git tree
+* dc5704b (HEAD, master) commit 5
+* 05cecc3 (origin/master) commit 4
+* 9b89dff commit 3
+* 3aca473 commit 2
+* 11905f6 commit 1
+</pre>
+					</section>
+					<section>
+						<h2>Le git rebase</h2>
+						<ul>
+						<li class="fragment">Peut polluer une branche publique</li>
+						<li class="fragment">Est une bonne pratique si bien utilisé</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Le git rebase interactive</h2>
+						<ul>
+						<li>Modifier les fichiers et/ou le message du dernier commit:</li>
+						<pre>git add ou git rm pour refaire votre index, puis:</pre>
+						<pre>git commit --amend -m "le nouveau message du commit"</pre>
+						<li>Modifier/Supprimer/Editer les commits précédents:</li>
+						<p style="font-size:30px;">1-Remonter dans l'historique des commits:</p>
+						<pre>git rebase -i HEAD~3</pre>
+						<p style="font-size:30px;">2-Un script apparait, vous pouvez:</p>
+						<ul>
+						<li style="font-size:30px;">"pick"->"edit" sur une ligne: stoppe le script pour editer le commit</li>
+						<li style="font-size:30px;">"pick"->"squash" sur une ligne: fusionne le commit dans le précédent (au dessus)</li>
+						<li style="font-size:30px;">Changer l'ordre des lignes -> changera l'ordre des commit</li>
+						<li style="font-size:30px;">Supprimer une ligne -> supprimera un commit</li>
+						</ul>
+						<p style="font-size:30px;">3-Faire vos modifications (git commit --amend...)</p>
+						<p style="font-size:30px;">4-Remonter au dernier commit avec</p>
+						<pre>git rebase ---continue</pre>
+						<pre></pre>
+					</section>
+				</section>
+				<!-- Workflows -->
+				<section>
+					<section>
+						<h1 style="font-size:56px;"><i class="icon-phone"></i> Les Workflows/Bonnes pratiques</h1>
+						<aside class="notes">
+							Apprendre les bonnes pratiques, les dos and dont
+						</aside>
+					</section>
+					<section>
+						<h2>Dos</h2>
+						<ul>
+						<li class="fragment">Une feature = une partie bien spécifique du code</li>
+						<li class="fragment">Une feature = une branche</li>
+						<li class="fragment">Spliter des changements en petites étapes = commit</li>
+						<li class="fragment">Commiter le plus souvent possible</li>
+						<li class="fragment">Faire une review du code avant commit</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Don'ts</h2>
+						<ul>
+						<li class="fragment">Developper sur le master</li>
+						<li class="fragment">Developper sur la branche de developpement</li>
+						<li class="fragment">Faire un rebase sur une branche impliquant plusieurs développeurs</li>
+						<li class="fragment">Supprimer des branches non mergées</li>
+						<li class="fragment">Utiliser git rebase interactive sur des commit déjà poussés sur le repo central</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Problématique</h2>
+						Comment optimiser le travail collaboratif?
+					</section>
+					<section>
+						<h2>Workflows</h2>
+						<ul>
+						<li class="fragment">Centralized Workflow:</li>
+						<p class="fragment">tout sur le master</p>
+						<li class="fragment">Feature Branch Workflow:</li>
+						<p class="fragment">une feature = une branche, pull request pour merger sa branche sur le master => code review</p>
+						<li class="fragment">Gitflow Workflow:</li>
+						<p class="fragment">plusieurs types de branches, des commandes pour faciliter les opérations</p>
+						<li class="fragment">Forking Workflow:</li>
+						<p class="fragment">un développeur = 1 repo local et 1 repo distant. Le repo central est uniquement géré par le project manager</p>
+						</ul>
+					</section>
+					<section>
+						<h2>Gitflow</h2>
+						<ul>
+						<li class="fragment">Centralized Workflow:</li>
+						<p class="fragment">tout sur le master</p>
+						<li class="fragment">Feature Branch Workflow:</li>
+						<p class="fragment">une feature = une branche, pull request pour merger sa branche sur le master => code review</p>
+						<li class="fragment">Gitflow Workflow:</li>
+						<p class="fragment">plusieurs types de branches, des commandes pour faciliter les opérations</p>
+						<li class="fragment">Forking Workflow:</li>
+						<p class="fragment">un développeur = 1 repo local et 1 repo distant. Le repo central est uniquement géré par le project manager</p>
+						</ul>
+					</section>
+				</section>
 				<section>
 					<h1>THE END</h1>
 					<h3>Merci pour votre attention</h3>
