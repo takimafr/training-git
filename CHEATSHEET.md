@@ -60,7 +60,21 @@ Si le projet existe déjà, il suffit de le cloner depuis son repo distant
 Un dossier monrepo sera créé dans le répertoire où vous êtes
 
 ##3. Commandes principales
-###3.1. Branches
+
+###3.5. Commandes Incontournables
+####Afficher l'état de la Staging area
+>`git status`
+
+####Afficher l'arbre principal avec toutes les branches (attention: c'est un alias créé avec votre gitconfig)
+>`git tree`
+
+####Remiser (=stash) vos changements non commités pour changer de branche temporairement
+>`git stash`
+
+####Reprendre (=pop) vos changements non commités une fois de retour sur la branche
+>`git stash pop`
+
+###3.2. Branches
 (+) Créer une branche au point actuel sans se placer dessus:  
 >`$ git branch branch_name`  
 
@@ -80,14 +94,18 @@ ou
 ou si les deux branches ont le meme nom:  
 >`$ git push origin branche .`  
 
+(T) Créer un tag annoté sur un commit:
+>`$ git tag -a nom_du_tag sha_du_commit -m "message du tag pour la version vX.X"`  
+
+(T) Créer un tag lightweight sur un commit:
+>`$ git tag nomdutag sha_du_commit`  
+
 (<) Récupérer la dernière version des branches depuis le repo origin:
 >`$ git fetch origin`  
 
-(^) Appliquer les commits de la branche distante qui diffèrent de la branche locale:
->`$ git rebase origin/nomdelabranche`
 
 
-###3.2. Index
+###3.3. Index
 (+) Ajouter des nouveaux fichiers ou des fichiers modifiés à l'index (2 exemples)  
 >`$ git add .`  
 >>ajoute tous les fichiers du dossier courant et de ses sous dossiers  
@@ -103,7 +121,7 @@ ou si les deux branches ont le meme nom:
 >`$ git reset HEAD file1.txt dossier1/*`  
 >>enlève file1.txt et les fichiers du dossier1 de l'index  
 
-###3.3. Commit
+###3.4. Commit
 (+) Commiter les changements ajoutés à l'index:
 >`$ git commit -m "message de votre commit" .`  
 
@@ -116,15 +134,55 @@ ou si les deux branches ont le meme nom:
 >>ex: Annuler le commit précédent:  
 >`$ git revert HEAD~1`  
 
+###3.5. Rebase et rebase interactif
+(^) Appliquer les commits de la branche distante qui diffèrent de la branche locale:  
+>`$ git rebase origin/nomdelabranche`  
 
+(e) Lancer un rebase interactif en remontant 4 commits:  
+>`$ git rebase -i HEAD~3`  
 
+Un contenu similaire à celui-ci apparait:  
+>pick 4995a59 mon deuxieme commit  
+>pick 531b54f mon troisieme commit  
+>pick 0e9c8cc mon quatrieme commit  
+
+Modifier le contenu en conséquence pour effectuer les actions suivantes:
+
+####(e) Inverser l'ordre des commits 531b54f et 0e9c8cc:  
+>pick 4995a59 mon deuxieme commit  
+>pick 0e9c8cc mon quatrieme commit  
+>pick 531b54f mon troisieme commit  
+
+####(e) Fusionner le commit 531b54f avec son précédent 4995a59:  
+>pick 4995a59 mon deuxieme commit  
+>squash 531b54f mon troisieme commit  
+>pick 0e9c8cc mon quatrieme commit  
+
+####(x) Supprimer le commit 531b54f:  
+>pick 4995a59 mon deuxieme commit  
+>\#supprimer cette ligne: pick 531b54f mon troisieme commit   
+>pick 0e9c8cc mon quatrieme commit  
+
+####(e) Editer le commit 531b54f:  
+>pick 4995a59 mon deuxieme commit  
+>**edit** 531b54f mon troisieme commit  
+>pick 0e9c8cc mon quatrieme commit  
+
+Puis effectuer vos modifications, commiter, et exécuter  
+>`$ git rebase --continue`  
 
 ##Bibliographie  
-Un livre facile d'accès et très complet sur git (en anglais)  
->[https://github.com/blog/1640-git-internals-pdf-open-sourced](https://github.com/blog/1640-git-internals-pdf-open-sourced)  
-
-Des exercices pour se familiariser avec git, commentés et progressifs (en anglais)  
+Une formation git très complète et facile d'accès (en anglais)  
 >[http://git-scm.com/book/en](http://git-scm.com/book/en)  
+
+Un livre très complet sur git (en anglais)  
+>[https://github.com/blog/1640-git-internals-pdf-open-sourced](https://github.com/blog/1640-git-internals-pdf-open-sourced)  
 
 Une cheatsheet des commandes git, répertoriées en couches (en anglais)  
 >[http://ndpsoftware.com/git-cheatsheet.html](http://ndpsoftware.com/git-cheatsheet.html)
+
+Un très bon document pour comprendre et choisir le workflow adapté à votre projet (en anglais)  
+>[https://www.atlassian.com/git/workflows#!workflow-release-cycle](https://www.atlassian.com/git/workflows#!workflow-release-cycle)  
+
+Un article qui donne une approche détaillée du workflow gitflow  
+>[http://www.synbioz.com/blog/git-adopter-un-modele-de-versionnement-efficace](http://www.synbioz.com/blog/git-adopter-un-modele-de-versionnement-efficace)  
