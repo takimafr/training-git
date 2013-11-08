@@ -74,7 +74,7 @@
 			    <li>Créer une référence qui s'appelle "old" dans heads (<=> branche) vers le deuxième commit en utilisant la commande: <br/><pre>git update-ref refs/heads/old sha_du_deuxieme_commit</pre> </li>
  			    <li>Pour savoir où l'on est placé à l'instant t, git utilise une référence appelée <strong>HEAD</strong>, qui pointe vers une branche. Pour la créer, il suffit d'exécuter:<br/><pre>git symbolic-ref HEAD refs/heads/old</pre></li>
                             <li>Créer un <strong>lightweight Tag</strong> "v0.0" sur le premier commit. Quelle est la différence avec le <strong>Tag</strong> v1 créé précédemment? <br /><pre>git update-ref refs/tags/nomdutag sha_du_commit</pre> </li>
-			    <li>Initialiser un nouveau repo central <i>parlez-vous-git-remote-exo1.2.git</i> dans votre répertoire personnel (ici: /home/user/git/parlez-vous-git-remote-exo1.2.git), et l'initialiser avec la commande <pre>git init --bare</pre></li>
+			    <li>Initialiser un nouveau repo central <i>repo-origin1.2.git</i> dans votre répertoire personnel (ici: /home/user/git/repo-origin1.2.git), et l'initialiser avec la commande <pre>git init --bare</pre></li>
 			    <li>Dans votre projet: ajouter ce repo en tant que repo distant par défaut (appelé <strong>origin</strong>):<pre> git remote add origin chemindurepo</pre></li>
 			    <li>Pusher votre branche master sur le repo central origin <pre> git push origin master</pre></li>
 			    <li>Pusher vos tags sur le repo central origin <pre> git push --tag origin</pre></li>
@@ -83,7 +83,50 @@
                 </div>
 		<div class="media">
                     <div class="media-body">
-                        <p>A la fin de cet exercice, votre git lola devrait donner:</p>
+                        <p>A la fin de cet exercice, votre git tree devrait donner:</p>
+<pre>
+* 531b54f (tag: v1.0, origin/master, master) mon troisieme commit<br />
+* 4995a59 (HEAD, old) mon deuxieme commit<br />
+* 7b1290b (tag: v0.0) mon premier commit
+</pre>
+                    </div>
+                </div>
+            </section>
+	    <!-- 30 min -->
+            <section id="exercice2">
+                <h1>Exercice 2 - Commandes de base</h1>
+                <p>Le but de cet exercice est de se familiariser avec les commandes de base de Git.</p>
+		<div class="media">
+                    <img class="media-object pull-left" src="img/exo2.png" width="250px" />
+                    <div class="media-body">
+                        <p>Indications:</p>
+                        <ul>
+	                    <li>Télécharger l'archive suivante: <strong>git-repo-content.zip</strong>, l'extraire dans un dossier <strong>repo2</strong> et initialiser un nouveau repo git à l'intérieur de celui-ci avec la commande <br /><pre>git init</pre></li>
+ 
+			    <li>Ajouter les nouveaux fichiers à la zone de stage avec: <pre>git add .</pre></li>
+			</ul>
+		    </div>
+			<ul>
+                            <li>Commitez votre index pour enregistrer une sorte de "snapshot" de votre projet, le commit. <br /><pre>git commit -m "mon premier commit"</pre></li>
+			    <li>Modifier <i>fichier3.txt</i>, l'ajouter à l'index.</li>
+ 			    <li>Commiter de nouveau</li>
+			    <li>Modifier <i>fichier1.txt</i>, l'ajouter à l'index.</li>
+ 			    <li>Commiter de nouveau</li>
+ 			    <li>Créez un <strong>annoted Tag</strong> "v1.0" qui pointe sur le troisième commit: <br /><pre>git tag -a nomdutag sha_du_commit_parent -m "message"</pre></li>
+			    <li>Créer un <strong>lightweight Tag</strong> "v0.0" sur le premier commit. Quelle est la différence avec le <strong>Tag</strong> v1 créé précédemment? <br /><pre>git tag nomdutag sha_du_commit_parent</pre></li>
+			</ul>
+			<p>Vous avez maintenant réussi à créer un historique git complet! vous pouvez afficher l'historique en utilisant la commande <br/><pre>git log --stat sha_du_dernier_commit</pre></p>
+                        <ul>
+	                    <li>Initialiser un nouveau repo central <i>repo-origin2.git</i> dans votre répertoire personnel (ici: /home/user/git/repo-origin2.git), et l'initialiser avec la commande <pre>git init --bare</pre></li>
+			    <li>Dans votre projet: ajouter ce repo en tant que repo distant par défaut (appelé <strong>origin</strong>):<pre> git remote add origin chemindurepo</pre></li>
+			    <li>Pusher votre branche master sur le repo central origin <pre> git push origin master</pre></li>
+			    <li>Pusher vos tags sur le repo central origin <pre> git push --tag origin</pre></li>
+                        </ul>
+                    </div>
+                </div>
+		<div class="media">
+                    <div class="media-body">
+                        <p>A la fin de cet exercice, votre git tree devrait donner:</p>
 <pre>
 * 531b54f (tag: v1.0, origin/master, master) mon troisieme commit<br />
 * 4995a59 (HEAD, old) mon deuxieme commit<br />
@@ -93,8 +136,8 @@
                 </div>
             </section>
 	    <!-- 20 min -->
-            <section id="exercice2">
-                <h1>Exercice 2 - Branches/merge</h1>
+            <section id="exercice3">
+                <h1>Exercice 3 - Branches/merge</h1>
                 <p>Le but de cette exercice est de comprendre l'intérêt des branches, et de prendre en main un merge (en reprenant l'exercice précédent)</p>
                 <div class="media">
                     <div class="media-body">
@@ -114,6 +157,8 @@
                         <h3>Etape 2:</h3>
                         <ul>
 			    <li>Revenir sur la branche <strong>master</strong></li>
+             		    <li>Modifier le <i>fichier1.txt</i>, l'ajouter à l'index</li>
+			    <li>Modifier le <i>fichier2.txt</i>, l'ajouter à l'index</li>
              		    <li>Modifier le <i>fichier3.txt</i>, l'ajouter à l'index</li>
              		    <li>Commiter les changements avec le message "mon cinquieme commit sur la branche master"</li>
              		    <li>Pousser les changements sur le repo <strong>origin</strong></li>
@@ -125,6 +170,11 @@
                         <h3>Etape 3:</h3>
                         <ul>
 			    <li>Merger la branche <strong>develop</strong> sur le <strong>master</strong>: <pre>git merge develop -m "merge de la branche develop sur master"</pre></li>
+			    <li> Vous faites face à votre premier conflit:</li>
+<pre>CONFLICT (modify/delete): dossier1/fichier2.txt deleted in develop and modified in HEAD. 
+Version HEAD of dossier1/fichier2.txt left in tree.
+Automatic merge failed; fix conflicts and then commit the result.</pre>
+			    <li>Utiliser <b>git mergetool</b> pour le résoudre (garder le fichier modifié)</li>
 			    <li>Pusher la branche <strong>master</strong> sur le repo distant</li>
              		    <li>Supprimer la branche <strong>develop</strong> locale: <pre>git branch -D develop</pre></li>
              		    <li>Supprimer la branche <strong>develop</strong> distante (<strong>!Délicat!</strong>): <pre>git push origin :develop</pre></li>
@@ -147,15 +197,15 @@
                     </div>
                 </div>
 	    </section>
-	    <section id="exercice3">
-                <h1>Exercice 3 - Rebase</h1>
+	    <section id="exercice4">
+                <h1>Exercice 4 - Rebase</h1>
                 <p>Le but de cette exercice est de comprendre l'intérêt d'un rebase</p>
                 <div class="media">
                     <div class="media-body">
                         <p>Etape 1: Simulation d'un commit d'une autre personne:</p>
                         <ul>
-             		    <li>Se positionner sur votre repo <strong>distant</strong> (exo 1.2)</li>
-             		    <li>Modifier le <i>fichier1.txt</i> et commiter les changements</li>
+             		    <li>Faire une copie des repo de l'exercice précédent (local <strong> et distant</strong>)</li>
+             		    <li>Modifier le <i>.git/config</i> </li>
 			</ul>
 			<p>Etape 2: Simulation d'un commit d'une autre personne:</p>
                         <ul>

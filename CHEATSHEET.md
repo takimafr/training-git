@@ -125,7 +125,6 @@ ou si les deux branches ont le meme nom:
 (+) Commiter les changements ajoutés à l'index:
 >`$ git commit -m "message de votre commit" .`  
 
-
 (+) Ajouter d'autres fichiers dans l'index au dernier commit (en cas d'oubli), si vous ne l'avez pas encore pushé sur le repo distant:  
 >`$ git commit --amend -m "nouveau message qui remplacera l'ancien commit"`  
 
@@ -171,6 +170,15 @@ Modifier le contenu en conséquence pour effectuer les actions suivantes:
 Puis effectuer vos modifications, commiter, et exécuter  
 >`$ git rebase --continue`  
 
+###3.6. Merge et mergetool
+(c) Configurer un mergetool (remplacer mymt par votre mergetool: meld,kdiff3,...)  
+>`git config --global merge.tool mymt"`  
+
+(m) Lancer un merge de la branche mybranchy sur la branche actuelle (mybranchx)  
+>`git merge mybranchy -m "merge de mybranchy sur la branche mybranchx"`  
+
+
+
 ##Bibliographie  
 Une formation git très complète et facile d'accès (en anglais)  
 >[http://git-scm.com/book/en](http://git-scm.com/book/en)  
@@ -186,3 +194,6 @@ Un très bon document pour comprendre et choisir le workflow adapté à votre pr
 
 Un article qui donne une approche détaillée du workflow gitflow  
 >[http://www.synbioz.com/blog/git-adopter-un-modele-de-versionnement-efficace](http://www.synbioz.com/blog/git-adopter-un-modele-de-versionnement-efficace)  
+
+Un article sur l'utilisation pas à pas de gitflow  
+>[http://blogs.endjin.com/2013/04/a-step-by-step-guide-to-using-gitflow-with-teamcity-part-3-gitflow-commands](http://blogs.endjin.com/2013/04/a-step-by-step-guide-to-using-gitflow-with-teamcity-part-3-gitflow-commands/)  
