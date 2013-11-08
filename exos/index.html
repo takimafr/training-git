@@ -128,9 +128,9 @@
                     <div class="media-body">
                         <p>A la fin de cet exercice, votre git tree devrait donner:</p>
 <pre>
-* 531b54f (tag: v1.0, origin/master, master) mon troisieme commit<br />
-* 4995a59 (HEAD, old) mon deuxieme commit<br />
-* 7b1290b (tag: v0.0) mon premier commit
+* 731e890 (HEAD, tag: v1.0, origin/master, master) mon troisieme commit<br />
+* bae8f8b mon deuxieme commit<br />
+* d13d9a2 (tag: v0.0) mon premier commit
 </pre>
                     </div>
                 </div>
@@ -139,7 +139,16 @@
             <section id="exercice3">
                 <h1>Exercice 3 - Branches/merge</h1>
                 <p>Le but de cette exercice est de comprendre l'intérêt des branches, et de prendre en main un merge (en reprenant l'exercice précédent)</p>
-                <div class="media">
+		<div class="media">
+                    <div class="media-body">
+                        <h3>Etape 0: Configuration</h3>
+                        <ul>
+             		    <li>Faire une copie des repo de l'exercice précédent (local <strong> et distant</strong>) dans les dossiers repo3 et repo-origin3.git respectifs</li>
+             		    <li>Modifier le <i>.git/config</i> </li>
+			</ul>
+                    </div>
+                </div>                
+		<div class="media">
                     <div class="media-body">
                         <h3>Etape 1:</h3>
                         <ul>
@@ -167,14 +176,30 @@
                 </div>
                 <div class="media">
                     <div class="media-body">
+                        <h3>Votre repo local doit maintenant ressembler à ceci:</h3>
+<pre>
+* 5919f9f (HEAD, origin/master, master) mon cinquieme commit sur la branche master
+| * 7bf9e93 (origin/develop, develop) mon quatrieme commit sur la branche develop
+|/  
+* 731e890 (tag: v1.0) mon troisieme commit
+* bae8f8b mon deuxieme commit
+* d13d9a2 (tag: v0.0) mon premier commit
+</pre>
+                    </div>
+                </div>
+                <div class="media">
+                    <div class="media-body">
                         <h3>Etape 3:</h3>
                         <ul>
 			    <li>Merger la branche <strong>develop</strong> sur le <strong>master</strong>: <pre>git merge develop -m "merge de la branche develop sur master"</pre></li>
 			    <li> Vous faites face à votre premier conflit:</li>
-<pre>CONFLICT (modify/delete): dossier1/fichier2.txt deleted in develop and modified in HEAD. 
-Version HEAD of dossier1/fichier2.txt left in tree.
-Automatic merge failed; fix conflicts and then commit the result.</pre>
+<pre>CONFLICT (content): Merge conflict in fichier1.txt
+CONFLICT (modify/delete): dossier1/fichier2.txt deleted in develop and modified in HEAD. Version HEAD of dossier1/fichier2.txt left in tree.
+Automatic merge failed; fix conflicts and then commit the result.
+</pre>
+			    <li>Configurer votre mergetool avec la commande <pre>git config --global merge.tool meld</pre></li>
 			    <li>Utiliser <b>git mergetool</b> pour le résoudre (garder le fichier modifié)</li>
+			    <li>Supprimer les fichiers de sauvegarde générés, et commiter le résultat</li>
 			    <li>Pusher la branche <strong>master</strong> sur le repo distant</li>
              		    <li>Supprimer la branche <strong>develop</strong> locale: <pre>git branch -D develop</pre></li>
              		    <li>Supprimer la branche <strong>develop</strong> distante (<strong>!Délicat!</strong>): <pre>git push origin :develop</pre></li>
@@ -185,14 +210,14 @@ Automatic merge failed; fix conflicts and then commit the result.</pre>
                     <div class="media-body">
                         <h3>Votre repo local doit maintenant ressembler à ceci:</h3>
 <pre>
-*   68f8252 (HEAD, origin/master, master) merge de la branche develop sur master
+*   763686e (HEAD, origin/master, master) merge de la branche develop sur master
 |\  
-| * 7abe660 mon quatrieme commit sur la branche develop
-* | f980135 mon cinquieme commit sur la branche master
+| * 7bf9e93 mon quatrieme commit sur la branche develop
+* | 5919f9f mon cinquieme commit sur la branche master
 |/  
-* 531b54f (tag: v1.0) mon troisieme commit
-* 4995a59 (old) mon deuxieme commit
-* 7b1290b (tag: v0.0) mon premier commit
+* 731e890 (tag: v1.0) mon troisieme commit
+* bae8f8b mon deuxieme commit
+* d13d9a2 (tag: v0.0) mon premier commit
 </pre>
                     </div>
                 </div>
@@ -202,24 +227,221 @@ Automatic merge failed; fix conflicts and then commit the result.</pre>
                 <p>Le but de cette exercice est de comprendre l'intérêt d'un rebase</p>
                 <div class="media">
                     <div class="media-body">
-                        <p>Etape 1: Simulation d'un commit d'une autre personne:</p>
+                        <h3>Etape 0: Configuration</h3>
                         <ul>
-             		    <li>Faire une copie des repo de l'exercice précédent (local <strong> et distant</strong>)</li>
+             		    <li>Faire une copie des repo de l'exercice précédent (local <strong> et distant</strong>) dans les dossiers repo4.1 et repo-origin4.git respectifs</li>
              		    <li>Modifier le <i>.git/config</i> </li>
+			    <li>Cloner le repo distant dans un répertoire repo4.2 avec la commande:<pre>git clone repo-origin4.git repo4.2</pre></li>
 			</ul>
-			<p>Etape 2: Simulation d'un commit d'une autre personne:</p>
+			<h3>Etape 1: Simulation d'un commit d'une autre personne</h3>
                         <ul>
-             		    <li>Se positionner sur votre repo <strong>local</strong></li>
+             		    <li>Se positionner sur la branche master de votre repo <strong>4.2</strong></li>
              		    <li>Modifier le <i>fichier2.txt</i> et commiter les changements</li>
+             		    <li>Ajouter un <i>fichier5.txt</i> à la racine et commiter les changements</li>
+             		    <li>Supprimer le <i>fichier1.txt</i> et commiter les changements</li>
+             		    <li>Pusher les changements sur le master</li>
+			</ul>
+			<h3>Etape 2: </h3>
+                        <ul>
+             		    <li>Se positionner sur la branche master de votre repo <strong>4.1</strong></li>
+             		    <li>Modifier le <i>fichier2.txt</i>, supprimer le <i>fichier3.txt</i> et commiter les changements</li>
+			    <li>Ajouter un <i>fichier6.txt</i> à la racine et commiter les changements</li>
              		    <li>Tenter de pusher les changements sur le master</li>
+			    <li>Vous obtenez l'erreur suivante:
+<pre> ! [rejected]        master -> master (non-fast-forward)
+error: failed to push some refs to '../repo-origin4.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Merge the remote changes (e.g. 'git pull')
+hint: before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+</pre></li>
              		    <li>Récupérer la dernière version du repo origin via: <pre>git fetch origin</pre></li>
              		    <li>Appliquer vos commits au dessus de ceux du repo avec:<pre>git rebase origin/master</pre></li>
+			    <li>Resoudre les conflits avec le mergetool si il y en a, puis continuer le rebase avec <pre>git rebase --continue</pre>
+<pre>
+* c2f3a43 (HEAD, master) mon septieme commit
+* c4510c1 mon sixieme commit
+* 5a5bdd8 (origin/master) mon huitieme commit
+* c228745 mon septieme commit
+* 1c1fb3a mon sixieme commit
+*   763686e merge de la branche develop sur master
+|\  
+| * 7bf9e93 mon quatrieme commit sur la branche develop
+* | 5919f9f mon cinquieme commit sur la branche master
+|/  
+* 731e890 (tag: v1.0) mon troisieme commit
+* bae8f8b mon deuxieme commit
+* d13d9a2 (tag: v0.0) mon premier commit
+</pre></li>
              		    <li>Pusher les changements sur le master</li>
 			</ul>
                     </div>
                 </div>               
 	    </section>
-        </div>  
+	    <section id="exercice5">
+                <h1>Exercice 5 - Git rebase interactive</h1>
+                <p>Le but de cette exercice est de prendre en main le git rebase interactive</p>
+                <div class="media">
+                    <div class="media-body">
+                        <h3>Etape 0: Configuration</h3>
+                        <ul>
+             		    <li>Faire une copie du repo distant de l'exercice 3 dans le dossier repo-origin5.git</li>
+			    <li>Cloner le repo distant deux fois dans repo5.1 et repo5.2 avec la commande:<pre>git clone repo-origin5.git repo5.1</pre></li>
+			    <li>Se placer sur la branche master du repo5.1</li>
+             		    <li>Modifier le <i>fichier2.txt</i> et commiter les changements (message: modif fichier2)</li>
+			    <li>Supprimer le <i>fichier1.txt</i>, ajouter un <i>fichier6.txt</i> et commiter les changements (message: suppression fichier1, ajout fichier6)</li>             		    
+			    <li>Ajouter un <i>fichier5.txt</i> à la racine et commiter les changements (message: ajout fichier5)</li>
+             		    
+			</ul>
+			<h3>Etape 1: Changer l'ordre de deux commits</h3>
+                        <ul>
+             		    <li>Nous allons vouloir changer l'ordre des 3 derniers commits. Entrer dans le mode interactif en spécifiant jusqu'où remonter:<pre>git rebase -i HEAD~3</pre></li>
+             		    Les informations suivantes apparaissent:
+<pre>pick f3d9f05 modification fichier2
+pick 0e92531 suppression fichier1, ajout fichier6
+pick be43b68 ajout fichier5</pre>
+
+			    <li>Effectuer la modification après la suppression, et l'ajout avant la suppression</li>
+<pre>
+pick be43b68 ajout fichier5
+pick 0e92531 suppression fichier1, ajout fichier6
+pick f3d9f05 modification fichier2
+</pre>
+             		    <li>Enregistrer les modifications du git-rebase-todo pour appliquer</li>
+			</ul>
+			<h3>Etape 2: séparer un commit en plusieurs</h3>
+                        <ul>
+             		    <li>Entrer dans le mode interactif en spécifiant jusqu'où remonter (ici, on va remonter au commit qui s'appelait "suppression fichier1, ajout fichier6", 2 commits au dessus:<pre>git rebase -i HEAD~2</pre></li>
+             		    Les informations suivantes apparaissent:
+<pre>pick 1c853c1 suppression fichier1, ajout fichier6
+pick 5b0b51f modification fichier2
+</pre>
+			    <li>Dire que vous allez éditer ce commit en remplaçant "pick" par edit sur la ligne concernée (celle du parent)</li>
+<pre>edit 1c853c1 suppression fichier1, ajout fichier6
+pick 5b0b51f modification fichier2
+</pre>
+			    <li>Annuler tous les changements effectués depuis le commit parent (HEAD^) avec la commande:<pre>git reset HEAD^ .</pre>
+             		    <li>Ajouter les modifications que vous voulez commiter à l'index, ici la suppression du fichier1 et commiter</li>
+			    <li>Ajouter le reste (ici ajout fichier6) à l'index, et recommiter</li>
+			    <li>Terminer en continuant le rebase:<pre>git rebase --continue</pre></li>
+			</ul>
+			Votre arbre devrait contenir:<pre>* 7eac1f2 (HEAD, master) modification fichier2
+* 0db46f6 ajout fichier6
+* badb5cd suppression de fichier1
+* a097534 ajout de fichier5
+*   763686e (origin/master, origin/HEAD) merge de la branche develop sur master
+|\  
+| * 7bf9e93 mon quatrieme commit sur la branche develop
+* | 5919f9f mon cinquieme commit sur la branche master
+|/  
+* 731e890 (tag: v1.0) mon troisieme commit
+* bae8f8b mon deuxieme commit
+* d13d9a2 (tag: v0.0) mon premier commit
+</pre>
+			<h3>Etape 3: Supprimer un commit</h3>
+                        <ul>
+             		    <li>L'ajout du fichier6 était une erreur, il s'agit ici de supprimer le commit (Attention: préférer un git revert en géneral!) <pre>git rebase -i HEAD~2</pre></li>
+             		    Les informations suivantes apparaissent:
+<pre>pick 0db46f6 ajout fichier6
+pick f3d9f05 modification fichier2</pre>
+
+			    <li>Supprimer la ligne en question et sauvegarder le git-rebase-todo pour appliquer</li>
+			</ul>
+			<h3>Etape 4: Fusionner des commits</h3>
+                        <ul>
+             		    <li>J'ai effectué tous mes commits, mais je voudrais pousser un seul commit avec ma fonctionnalité. Je vais fusionner mes 3 commits <pre>git rebase -i HEAD~3</pre></li>
+             		    Les informations suivantes apparaissent:
+<pre>pick a097534 ajout de fichier5
+pick badb5cd suppression de fichier1
+pick 16c01bb modification fichier2
+</pre>
+
+			    <li>Remplacer "pick" par "squash" sur les deux derniers commits:<pre>pick a097534 ajout de fichier5
+squash badb5cd suppression de fichier1
+squash 16c01bb modification fichier2
+</pre></li>
+			    <li>Enregistrer le git-rebase-todo, vous devrez ensuite éditer le message de commit (par défaut: concaténation des messages de commit)</li>
+			</ul>
+                    </div>
+                </div>               
+	    </section>
+ 	    <section id="exercice6">
+                <h1>Exercice 6 - Git flow</h1>
+                <p>Le but de cette exercice est de prendre en main Gitflow</p>
+5hur3b58
+                <div class="media">
+                    <div class="media-body">
+                        <h3>Etape 0: Installation</h3>
+                        <ul>
+             		    <li>Installer Gitflow en suivant <a href="https://github.com/nvie/gitflow/wiki/Installation" target="blank">ce lien</a></li>
+             		    <li>Dans votre dossier repo6, initialiser git flow avec la commande <pre>git flow init</pre></li>
+			</ul>
+			<h3>Etape 1: Feature</h3>
+			Vous développez une nouvelle fonctionnalité 001mafeature. 
+                        <ul>
+             		    <li>Pour cela, il faut créer une nouvelle feature:<pre>git flow feature start 001mafeature</pre></li>
+             		    <li>ajouter deux fichiers feature1.txt, feature2.txt et commiter ces fichiers un par un</li>
+             		    <li>"publier" = pusher vos commits sur le repo distant avec la commande:<pre>git flow feature publish 001mafeature</pre></li>
+             		    <li>Un collaborateur pourra récupérer votre branche avec la commande:<pre>git flow feature pull 001mafeature</pre></li>
+             		    <li>Une fois votre feature terminée, vous pouvez la merger avec la branche develop et la supprimer une fois le merge réussi avec la commande:<pre>git flow feature finish 001mafeature</pre></li>
+			</ul>
+			<h3>Etape 2: Release</h3>
+			Plusieurs features sont prêtes à être mises en production, vous allez donc créer une release pour cela, qui va être utilisée pour effectuer des tests, appliquer des bugfix etc avant la release finale
+                        <ul>
+             		    <li>Créer une nouvelle release:<pre>git flow release start mareleasev1</pre></li>
+			    <li>Commitez vos changements, faites les bugfix, ajoutez les logs, readmes etc...</li>
+			    <li>Pour notre exemple, ajouter un fichier <i>fixbeforerelease.txt</i> et commiter</li>
+			    <li>"publier" = pusher vos commits sur le repo distant avec la commande:<pre>git flow feature publish mareleasev1</pre></li>
+			    <li>Terminer la release avec <pre>git flow release finish mareleasev1</pre></li>
+             		    <li>Votre release sera taguée et est maintenant en production</li>
+			</ul>
+			<h3>Etape 3: Hotfix</h3>
+			Un bug est identifié en production, et vous devez développer un hotfix immédiatement.
+                        <ul>
+             		    <li>Créer un nouveau hotfix:<pre>git flow hotfix start hotfixv1.1 mareleasev1</pre></li>
+             		    <li>Commitez vos changements, et répercutez le hotfix sur toutes les branches master et develop avec la commande <pre>git flow hotfix finish hotfixv1.1</pre></li>
+			    <li>"publier" = pusher vos commits sur le repo distant avec la commande:<pre>git flow feature publish 001mafeature</pre></li>
+             		    <li>Votre hotfix sera taguée et est maintenant en production</li>
+			</ul>
+Votre code git tree devrait maintenant ressembler à ceci:
+<pre>
+*   d409b5a (HEAD, develop) Merge branch 'hotfix/hotfixv1.1' into develop
+|\  
+* \   28d2628 Merge branch 'release/mareleasev1' into develop
+|\ \  
+| | | *   6a66423 (tag: hotfixv1.1, master) Merge branch 'hotfix/hotfixv1.1'
+| | | |\  
+| | | |/  
+| | |/|   
+| | * | fb3f32f Hotfix: solved bug
+| | |/  
+| | *   0b7ee81 (tag: mareleasev1) Merge branch 'release/mareleasev1'
+| | |\  
+| | |/  
+| |/|   
+| * | 069d427 (origin/release/mareleasev1) Fix avant la release
+|/ /  
+* |   bb93218 Merge branch 'feature/001mafeature' into develop
+|\ \  
+| |/  
+|/|   
+| * 6d5457a (origin/feature/001mafeature) commit feature2.txt
+| * 6caab65 commit feature1.txt
+|/  
+* 4520950 (origin/master, origin/HEAD) ajout de fichier5, suppression de fichier1, modification fichier2
+*   763686e merge de la branche develop sur master
+|\  
+| * 7bf9e93 mon quatrieme commit sur la branche develop
+* | 5919f9f mon cinquieme commit sur la branche master
+|/  
+* 731e890 (tag: v1.0) mon troisieme commit
+* bae8f8b mon deuxieme commit
+* d13d9a2 (tag: v0.0) mon premier commit
+</pre>
+                    </div>
+                </div>               
+	    </section>
+        </div>
 
                 <script src="js/bootstrap.min.js"></script>
                 <script src="http://code.jquery.com/jquery-latest.js"></script>
