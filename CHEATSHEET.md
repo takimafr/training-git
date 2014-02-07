@@ -2,9 +2,9 @@
 
 ##1. Installation d'un environnement
 ###1.1. GitConfig
->`$ git config --global -e user.name "votre nom"`  
+>`$ git config --global user.name "votre nom"`  
 
->`$ git config --global -e user.email "votre@email.com"`  
+>`$ git config --global user.email "votre@email.com"`  
 
 Editer le fichier .gitconfig via la commande:  
 
