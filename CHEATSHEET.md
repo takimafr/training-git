@@ -104,9 +104,12 @@ ou si les deux branches ont le meme nom:
 
 
 ###3.3. Index
-(+) Ajouter des nouveaux fichiers ou des fichiers modifiés à l'index (2 exemples)  
+(+) Ajouter des nouveaux fichiers ou des fichiers modifiés à l'index (3 exemples)  
 >`$ git add .`  
 >>ajoute tous les fichiers du dossier courant et de ses sous dossiers  
+
+>`$ git add -a`
+>>ajoute tous les fichiers (y compris les fichiers supprimés et modifiés) à l'index 
 
 >`$ git add file2.txt folder1/* folder2/*.txt`  
 >>ajoute le fichier file2.txt, tous les fichiers du dossier folder1, et tous les fichiers texte du dossier folder2  
