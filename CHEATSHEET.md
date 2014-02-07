@@ -108,7 +108,7 @@ ou si les deux branches ont le meme nom:
 >`$ git add .`  
 >>ajoute tous les fichiers du dossier courant et de ses sous dossiers  
 
->`$ git add -a`
+>`$ git add -A`
 >>ajoute tous les fichiers (y compris les fichiers supprimés et modifiés) à l'index 
 
 >`$ git add file2.txt folder1/* folder2/*.txt`  
