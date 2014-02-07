@@ -2,25 +2,23 @@
 
 ##1. Installation d'un environnement
 ###1.1. GitConfig
->`$ git config –-global user.name "votre nom"`  
+>`$ git config --global -e user.name "votre nom"`  
 
->`$ git config –global user.email "votre@email.com"`  
+>`$ git config --global -e user.email "votre@email.com"`  
 
 Editer le fichier .gitconfig via la commande:  
 
 >`$ git config --global -e`  
 
-Pour activer la colorisation syntaxique et les alias "lol" et "lola", ajouter les lignes suivantes au .gitconfig:  
+Pour activer la colorisation syntaxique et les alias "tree", ajouter les lignes suivantes au .gitconfig:  
 >  [alias]  
-  tree = log --graph --decorate --pretty=oneline --abbrev-commit --all  
-  branch-merged = "!f(){ for branch in `git branch -r --merged | grep -v HEAD | grep -v origin/master | grep -v origin/release` ;do git show --format=\"%C(yellow)%d %Cgreen%aN %C(cyan)%ar\" $branch | head -n 1 ; done }; f"
-  branch-not-merged = "!f(){ for branch in `git branch -r --no-merged | grep -v HEAD | grep -v origin/master | grep -v origin/release` ;do git show --format=\"%C(yellow)%d %Cgreen%aN %C(cyan)%ar\" $branch | head -n 1 ; done }; f"
-
-  [color]  
-  branch = auto  
-  diff = auto  
-  interactive = auto  
-  status = auto  
+   tree = log --graph --decorate --pretty=oneline --abbrev-commit --all  
+  
+>  [color]  
+   branch = auto  
+   diff = auto  
+   interactive = auto  
+   status = auto  
 
 ###1.2. Gestion des fin de ligne
 **Windows** : les fins de lignes sont modélisées par un CRLF (Carriage Return Line Feed <=> \r\n)  
@@ -28,10 +26,10 @@ Pour activer la colorisation syntaxique et les alias "lol" et "lola", ajouter le
 **Git** : tout est stocké en LF par convention  
 
 **Client Windows** : doit toujours faire une conversion **CRLF → LF** quand il écrit dans la base de données, et doit toujours faire la conversion **LF →CRLF** quand il récupère des données de la base.  
->`$ git config –-global core.autocrlf true`
+>`$ git config --global -e core.autocrlf true`
 
 **Client Linux** : doit toujours faire une conversion CRLF → LF quand il écrit dans la base de données (mais n'en a normalement pas besoin) et n'aura aucune conversion à faire quand il récupère les données de la la base.  
->`$ git config –-global core.autocrlf input`
+>`$ git config --global -e core.autocrlf input`
 
 ##2. Initialisation ou Clonage d'un repository
 ###2.1. Initialisation d'un nouveau repo central (=origin)
@@ -47,11 +45,11 @@ Se mettre à la racine du dossier qui contient ou contiendra votre projet, et ex
 Si le fichier a un repo central distant (=remote) sur lequel il doit être répliqué il faut le déclarer. Par convention, on utilise le nom « origin » pour le dépôt principal
 
 Le dépôt peut être une URI :  
->`$ git add remote origin https://github.com/moi/monrepo.git`  
+>`$ git remote add origin https://github.com/moi/monrepo.git`  
 
 ou autre chose (un repo distant via ssh par exemple) :  
 
->`$ git add remote origin git@monserveur:~/git/monrepo.git`  
+>`$ git remote add origin git@monserveur:~/git/monrepo.git`  
 
 ###2.3. Clonage d'un repo existant
 Si le projet existe déjà, il suffit de le cloner depuis son repo distant
