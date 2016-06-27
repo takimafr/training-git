@@ -1,6 +1,6 @@
 #!/bin/bash
 rm -rf workspace
-rm -rf remote-repository
+rm -rf remote-repository.git
 unzip -d workspace git-repo-content.zip
 cd workspace
 echo "-----------------------------------------"
@@ -57,8 +57,8 @@ echo "-----------------------------------------"
 echo "Creating remote repository"
 echo "-----------------------------------------"
 cd ..
-mkdir remote-repository
-cd remote-repository
+mkdir remote-repository.git
+cd remote-repository.git
 if [ $1 = "debug" ]; then read  -n 1; fi
 echo "-----------------------------------------"
 echo "Initializing remote repository"
@@ -69,7 +69,7 @@ echo "-----------------------------------------"
 echo "Adding remote repository to project's remotes"
 echo "-----------------------------------------"
 cd ../workspace
-git remote add origin ../remote-repository
+git remote add origin ../remote-repository.git
 if [ $1 = "debug" ]; then read  -n 1; fi
 echo "-----------------------------------------"
 echo "Push branch master & tags to remote"

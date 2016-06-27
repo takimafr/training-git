@@ -1,7 +1,7 @@
 #!/bin/bash
 bash solution-2.sh $1
 rm -rf workspace-2
-git clone remote-repository workspace-2
+git clone remote-repository.git workspace-2
 cd workspace-2
 echo "-----------------------------------------"
 echo " Exercise 4"
